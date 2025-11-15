@@ -1,0 +1,94 @@
+models:
+  Customer:
+    name: string
+    address: string nullable
+    phone: string nullable
+    description: text nullable
+    relationships:
+      hasMany: Sale
+
+  Supplier:
+    name: string
+    phone: string nullable
+    address: string nullable
+    description: text nullable
+    relationships:
+      hasMany: Stack
+
+  ProductCategories:
+    name: string
+    description: text nullable
+    relationships:
+      hasMany: Products
+
+  Product:
+    name: string
+    model: string nullable
+    brand: string nullable
+    ram: string nullable
+    processor: string nullable
+    battery: string nullable
+    product_image: json nullable
+    relationships:
+      belongsTo: ProductCategories
+      hasMany: Stack
+  
+  Stack:
+    quantity: integer
+    purchase_price: decimal(10,2) nullable
+    total_amount: decimal(10,2) nullable
+    payment_amount: decimal(10,2) nullable
+    remain_amount: decimal(10,2) nullable
+    status: enum(paid,unpaid)
+    submit_date: date
+    relationships:
+      belongsTo: Product, Supplier
+      hasMany: Sale
+
+  Sale:
+    quantity: integer
+    sale_price: decimal(10,2)
+    payment: decimal(10,2)
+    remaining: decimal(10,2)
+    status: enum(paid,unpaid)
+    sale_date: date
+    relationships:
+      belongsTo: Stack, Customer
+
+  Expense:
+    title: string
+    amount: decimal(10,2)
+    description: text nullable
+    media: json nullable
+    submit_date: date
+    relationships:
+      belongsTo: User
+    
+  Investment:
+    title: string
+    amount: decimal(10,2)
+    submit_date: date
+    description: text nullable
+    
+  Partner:
+    percentage: integer 
+    phone: string nullable
+    email: string nullable
+    address: string nullable
+    media: json nullable
+    description: text nullable
+    relationships:
+      belongsTo: User
+  User:
+    name: string
+    email: string
+    password: string
+    relationships:
+      hasMany: Partner, Expense
+  
+  
+
+
+
+
+  
